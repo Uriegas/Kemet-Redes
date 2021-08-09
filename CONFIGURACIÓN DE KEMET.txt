@@ -11,7 +11,7 @@ SW-2°°
 hostname SW-2
 
 SW-3°°
-hostname SW-3
+hostname D-Piso
 
 SW-4°°
 hostname SW-4
@@ -25,6 +25,8 @@ hostname SW-6
 SW-7°°
 hostname SW-7
 
+D-Depa°°
+hostname D-Depa
 CORE°°
 hostname CORE
 
@@ -225,7 +227,7 @@ spanning-tree portfast
 ------------------------------
 	2.3. ENLACES TRONCALES-------------------
 SW-1 Y SW-2
-int range g0/1-2, fa0/23
+int fa0/23
 switchport mode trunk
 switchport trunk native vlan 140
 switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
@@ -234,10 +236,41 @@ end
 
 NOTA: no me acuerdo si se ponen todas en otra red xd
 
+SW1-1 -> SW-3
+int range g0/1-2
+channel-group 1 mode active
+int port-channel 1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport nonegotiate
+end
+
+Etherchannel------!
+SW-2 -> SW-3
+int range g0/1-2
+channel-group 1 mode active
+int port-channel 2
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport nonegotiate
+end
 
 (por mientras un cable xd no sé si vayas a conectar como estrella jjsjsjs)
 SW-4
-int range g0/1-2, fa0/23
+int fa0/23
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport nonegotiate
+end
+
+Etherchannel------!
+SW-4 -> D-Depa
+int range g0/1-2
+channel-group 1 mode active
+int port-channel 1
 switchport mode trunk
 switchport trunk native vlan 140
 switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
@@ -263,29 +296,72 @@ end
 
 SW-7
 
-int range g0/1-2, fa0/24
+int fa0/24
 switchport mode trunk
 switchport trunk native vlan 140
 switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
 switchport nonegotiate
 end
 
+SW-7 -> D-Depa
+Etherchannel----!
+int range g0/1-2
+channel-group 1 mode active
+int port-channel 1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport nonegotiate
+end
 
 	2.4. ENRUTAMIENTO CON VLANs. PENDIENTE PORQUE FALTA LA RED AQUÍ xd-------
 
 
 	2.5. CONFIGURAMOS PRIORIDADES SPA
+
+Parte piso ----------------------------------
 SW-3
 spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 4096
+SW-1
 spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 8192
+SW-2
 spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 12288
 
+Parte departamental
+D-Depa
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 4096
+SW-4
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 8192
+SW-5
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 12288
+SW-6
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 16384
+SW-7
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 20480
 
 	3. SEGURIDAD DE PUERTO**************************
+(lo checas comoquiera antes de meter la configuración)
+POR SWITCH
+3.1. Se apagará los puertos no usados.----
+3.2. No usar la vlan 1 (listo)----
+3.3. Quitar la negociación (listo)-----
+3.4. Habilitamos la seguridad de puerto----
+
+int fa0/[Pendiente]
+switchport port-security
+switchport port-security maximum [Pendiente] 
+switchport port-security mac-address sticky
+switchport port-security violation restrict
+
+
 
 	4. Etherchannel*********************************
+Está dentro de la configuración de la vlan ;>
+es LACP
+VERIFICAR show EtherChannel
 
-	5. Spanning-tree (dentro del de vlan)**
+	5. Spanning-tree
+Etá dentro de la configuración de la vlan
 
 	6. DIRECCIONAMIENTO DHCP***********************
 se hará para la red de piso ;>
@@ -309,8 +385,6 @@ PASO 1
 	interface GigabitEthernet 0/1
 	ip address dhcp
 	no shutdown
-
-
 PASO 2
 
 	R1
