@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ** <- Tema
 -- <- Subtema
 °° <- Dispositivo
@@ -168,12 +169,17 @@ vlan 140
 name NATIVA
 ---------------------------
 	2.1. DAR DE ALTA A LAS VLANs--------------------------
+RED DE PISO
 
 SW-1 Y SW-2°°°°
 int range fa0/
 switch mode access
 switchport access vlan 20
 spanning-tree portfast
+
+
+
+RED DEPARTAMENTAL
 
 SW-4°°°°
 ---Parte de gerencia----
@@ -226,15 +232,17 @@ switchport access vlan 16
 spanning-tree portfast
 ------------------------------
 	2.3. ENLACES TRONCALES-------------------
+RED DE PISO
 SW-1 Y SW-2
 int fa0/23
 switchport mode trunk
 switchport trunk native vlan 140
-switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport trunk allowed vlan 20
 switchport nonegotiate
 end
 
 NOTA: no me acuerdo si se ponen todas en otra red xd
+NOTA: checa si va tmb la administrativa xd
 
 SW1-1 -> SW-3
 int range g0/1-2
@@ -242,7 +250,7 @@ channel-group 1 mode active
 int port-channel 1
 switchport mode trunk
 switchport trunk native vlan 140
-switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport trunk allowed vlan 20
 switchport nonegotiate
 end
 
@@ -253,11 +261,13 @@ channel-group 1 mode active
 int port-channel 2
 switchport mode trunk
 switchport trunk native vlan 140
-switchport trunk allowed vlan 2,4,6,8,10,12,14,16,18,20
+switchport trunk allowed vlan 20
 switchport nonegotiate
 end
 
 (por mientras un cable xd no sé si vayas a conectar como estrella jjsjsjs)
+
+RED DEPARTAMENTAL
 SW-4
 int fa0/23
 switchport mode trunk

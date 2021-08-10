@@ -1,0 +1,113 @@
+RED DE PISO
+ 
+2. VLANs (ponla dos en dos)******************************
+vlan 20
+name PISO
+
+vlan 120
+name ADMINISTRATIVA_PISO
+
+vlan 140
+name NATIVA
+
+2.1. DAR DE ALTA A LAS VLANs--------------------------
+SW-1 y SW-2
+int range fa0/1-12
+switch mode access
+switchport access vlan 20
+spanning-tree portfast
+
+	2.3. Enlaces troncales--------------------
+
+cuando configures fijate que sea las interfaces xd
+RED DE PISO
+SW-1
+int range g0/1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 20,120,140
+switchport nonegotiate
+
+int range g0/2, fa0/24
+channel-group 1 mode active
+int port-channel 1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 20,120,140
+switchport nonegotiate
+
+SW-2
+int range g0/1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 20,120,140
+switchport nonegotiate
+
+int range fa0/22-23
+channel-group 2 mode active
+int port-channel 2
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 20,120,140
+switchport nonegotiate
+
+SW-3
+int range g0/1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 20,120,140
+switchport nonegotiate
+
+
+	2.4. DIRECCIONAMIENTO.
+sw-1
+int vlan 120
+ip add 172.16.1.81 255.255.255.240
+no shut
+ip default 172.16.1.94
+
+sw-2
+int vlan 120
+ip add 172.16.1.82 255.255.255.240
+no shut
+ip default 172.16.1.94
+
+sw-3
+int vlan 120
+ip add 172.16.1.83 255.255.255.240
+no shut
+ip default 172.16.1.94
+
+
+	2.5. HABILITAR EL ENRUTAMIENTO ENTRE VLANs USANDO ROUTER
+int g0/0/0
+no shut
+
+int g0/0/0.20
+encapsulation dot1q 20
+ip address 172.16.0.62 255.255.255.192
+
+int g0/0/0.120
+encapsulation dot1q 120
+ip address 172.16.1.94 255.255.255.240
+
+
+	2.5. CONFIGURAMOS PRIORIDADES SPA
+
+SW-3
+spanning-tree vlan 20,120,140 priority 4096
+SW-1
+spanning-tree vlan 20,120,140 priority 8192
+SW-2
+spanning-tree vlan 20,120,140 priority 12288
+
+
+
+	6. DIRECCIONAMIENTO DHCP***********************
+
+R-PISO
+ip dhcp excluded-address 172.16.0.62
+ip dhcp POOL VLAN20
+network 172.16.0.0 255.255.255.192
+default-router 172.16.0.62
+dns-server pendientexxxx

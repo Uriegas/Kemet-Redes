@@ -1,0 +1,244 @@
+CONFIGURACIÓN DE LA RED DEPARTAMENTAL
+
+ 2. VLANs (ponla dos en dos)******************************
+vlan 2
+name GERENCIA
+
+vlan 4
+name DEPA_TI
+
+vlan 6
+name DEPA_RECEPCION
+
+vlan 8
+name DEPA_RECURSOS_HUMANOS
+
+vlan 10
+name ENTRENAMIENTO
+
+vlan 12
+name SALA_CURSO
+
+vlan 14
+name CALIDAD
+
+vlan 16
+name INGENIERÍA
+
+vlan 110
+name ADMINISTRATIVA_DEPARTAMENTAL
+
+vlan 140
+name NATIVA
+
+	2.1. DAR DE ALTA A LAS VLANs--------------------------
+
+RED DEPARTAMENTAL
+
+SW-4°°°°
+---Parte de gerencia----
+int range fa0/1-4
+switch mode access
+switchport access vlan 2
+spanning-tree portfast
+
+---Parte de depa.ti---
+int range fa0/5-9
+switch mode access
+switchport access vlan 4
+spanning-tree portfast
+
+---Parte de depa.re---
+int range fa0/10-12
+switch mode access
+switchport access vlan 6
+spanning-tree portfast
+
+SW-5°°°°°°
+---Parte de RH---
+int range fa0/1-7
+switch mode access
+switchport access vlan 8
+spanning-tree portfast
+
+---Parte de entrenamiento---
+int range fa0/8-10
+switch mode access
+switchport access vlan 10
+spanning-tree portfast
+
+---Parte de Sala curso---
+int range fa0/11-12
+switch mode access
+switchport access vlan 12
+spanning-tree portfast
+
+SW-6°°°°°°
+int range fa0/1-10
+switch mode access
+switchport access vlan 14
+spanning-tree portfast
+
+SW-7°°°°
+int range fa0/1-10
+switch mode access
+switchport access vlan 16
+spanning-tree portfast
+
+	3. Enlaces troncales--------------------
+
+RED DEPARTAMENTAL
+
+SW-4
+int g0/2
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport nonegotiate
+
+Etherchannel------!
+SW-4 -> Multi
+
+int range fa0/23-24
+channel-group 1 mode active
+int port-channel 1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport nonegotiate
+
+(para el multicapitax)
+int range fa0/23-24
+channel-group 1 mode active
+int port-channel 1
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+SW-5
+int range g0/1-2, fa0/24
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport nonegotiate
+
+SW-6
+int range g0/1-2, fa0/24
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport nonegotiate
+
+SW-7
+
+int g0/1
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport nonegotiate
+
+SW-7 -> D-Depa
+Etherchannel----!
+int range fa0/20-21
+channel-group 2 mode active
+int port-channel 2
+switchport mode trunk
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport nonegotiate
+
+(para el multicapitax)
+int range fa0/20-21
+channel-group 2 mode active
+int port-channel 2
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+
+Multi-depa
+int range fa0/18-19
+switchport trunk native vlan 140
+switchport trunk allowed vlan 2,4,6,8,10,12,14,16,20,110,140
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+	2.4. DIRECCIONAMIENTO.
+(al multicapa no se le pone)
+
+SW-4
+int vlan 110
+ip add 172.16.1.65 255.255.255.240
+no shut
+ip default 172.16.1.78
+
+SW-5
+int vlan 110
+ip add 172.16.1.66 255.255.255.240
+no shut
+ip default 172.16.1.78
+
+SW-6
+int vlan 110
+ip add 172.16.1.67 255.255.255.240
+no shut
+ip default 172.16.1.78
+
+SW-7
+int vlan 110
+ip add 172.16.1.68 255.255.255.240
+no shut
+ip default 172.16.1.78
+
+	2.5. HABILITAR EL ENRUTAMIENTO ENTRE VLANs USANDO MULTICAPA
+ip routing
+int vlan 2
+ip add 172.16.0.206 255.255.255.240
+no shut
+
+int vlan 4
+ip add 172.16.0.222 255.255.255.240
+no shut
+
+int vlan 6
+ip add 172.16.0.238 255.255.255.240
+no shut
+
+int vlan 8
+ip add 172.16.0.254 255.255.255.240
+no shut
+
+int vlan 10
+ip add 172.16.0.158 255.255.255.224
+no shut
+
+int vlan 12
+ip add 172.16.0.190 255.255.255.224
+no shut
+
+int vlan 14
+ip add 172.16.1.14 255.255.255.240
+no shut
+
+int vlan 16
+ip add 172.16.1.30 255.255.255.240
+no shut
+
+int vlan 110
+ip add 172.16.1.78 255.255.255.240
+no shut
+
+	2.5. CONFIGURAMOS PRIORIDADES SPA
+multi-depa
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 4096
+SW-6
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 8192
+SW-5
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 12288
+SW-4
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 16384
+SW-7
+spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 20480
+
