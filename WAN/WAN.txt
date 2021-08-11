@@ -1,0 +1,74 @@
+R-Piso*****************************
+int se0/1/0
+ip add 172.16.1.53 255.255.255.252
+no shut
+
+int se0/1/1
+ip add 172.16.1.57 255.255.255.252
+no shut
+
+CORE*******************************
+int se0/1/1
+ip add 172.16.1.54 255.255.255.252
+no shut
+
+int se0/1/0
+ip add 172.16.1.61 255.255.255.252
+no shut
+
+int g0/0/1
+ip add 172.16.1.41 255.255.255.252
+no shut
+
+CORE-Repuesto*********************
+int se0/1/1
+ip add 172.16.1.58 255.255.255.252
+no shut
+
+int se0/1/0
+ip add 172.16.1.62 255.255.255.252
+no shut
+
+int g0/0/1
+ip add 172.16.1.45 255.255.255.252
+no shut
+
+Multi-depa************************
+int g0/1
+ip add 172.16.1.42 255.255.255.252
+no shut
+
+int g0/2
+ip add 172.16.1.46 255.255.255.252
+no shut
+
+int fa0/1
+ip add
+no shut
+
+int fa0/22
+ip add
+no shut
+
+R-ISP
+int g0/0/0
+ip add
+no shut
+
+int g0/2/0
+ip add
+no shut
+
+int g0/0/1
+ip add 128.128.128.1 255.255.255.0
+no shut
+
+ISP ROUTER
+int g0/0/1
+ip add 128.128.128.2 255.255.255.0
+
+int g0/0/0
+ip add 128.128.128.254 255.255.255.0
+no shut
+
+configruas el server jj
