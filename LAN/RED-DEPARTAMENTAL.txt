@@ -242,3 +242,73 @@ spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 16384
 SW-7
 spanning-tree vlan 2,4,6,8,10,12,14,16,18,20,120,130,140 priority 20480
 
+
+	3. SEGURIDAD DE PUERTOS******************
+	3.1 PARA HOST----------------------
+
+Nota: Puse dos como máximo en los host que son computadoras o teléfonos IPs
+Lo veo como uno principal y otro de respaldo
+Si un día la computadora de la persona no jala, podrá conectar su laptop para
+seguir trabajando. Y a los que son servidores eso si se los puse específicos
+
+Para las interfaces que no ocupo los apagué:p
+VERIFIQUÉ CON ESTE: show port-security
+
+SW-4°°°
+int range fa0/1-7
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int fa0/8
+switchport port-security
+switchport port-security maximum 1
+switchport port-security mac-address 0030.A32A.AA26
+switchport port-security violation shutdown
+
+int fa0/9
+switchport port-security
+switchport port-security maximum 1
+switchport port-security mac-address 0090.21C0.97EA
+switchport port-security violation shutdown
+
+int range fa0/10-12
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int range fa0/13-22
+shutdown
+
+
+SW-5°°°
+int range fa0/1-12
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int range fa0/13-22
+shutdown
+
+SW-6°°°
+int range fa0/1-10
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int range fa0/11-23
+shutdown
+
+SW-7°°°
+int range fa0/1-10
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int range fa0/11-19, fa0/22-24, g0/2
+shutdown
