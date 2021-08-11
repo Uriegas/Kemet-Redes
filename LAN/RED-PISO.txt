@@ -103,7 +103,7 @@ spanning-tree vlan 20,120,140 priority 12288
 
 
 
-	6. DIRECCIONAMIENTO DHCP***********************
+	3. DIRECCIONAMIENTO DHCP***********************
 
 R-PISO
 ip dhcp excluded-address 172.16.0.62
@@ -111,3 +111,34 @@ ip dhcp POOL VLAN20
 network 172.16.0.0 255.255.255.192
 default-router 172.16.0.62
 dns-server pendientexxxx
+
+
+	4. SEGURIDAD DE PUERTO
+
+Nota: Puse dos como máximo en los host que son computadoras o teléfonos IPs
+Lo veo como uno principal y otro de respaldo
+Si un día la computadora de la persona no jala, podrá conectar su laptop para
+seguir trabajando. Y a los que son servidores eso si se los puse específicos
+
+Para las interfaces que no ocupo los apagué:p
+VERIFIQUÉ CON ESTE: show port-security
+
+SW-1°°°
+int range fa0/1-12
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int range fa0/13-23
+shutdown
+
+SW-2°°°
+int range fa0/1-12
+switchport port-security
+switchport port-security maximum 2
+switchport port-security mac-address sticky
+switchport port-security violation shutdown
+
+int range fa0/13-21, g0/2
+shutdown
