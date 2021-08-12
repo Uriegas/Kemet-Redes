@@ -16,6 +16,7 @@ int range fa0/1-12
 switch mode access
 switchport access vlan 20
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 	2.3. Enlaces troncales--------------------
 
@@ -142,3 +143,15 @@ switchport port-security violation shutdown
 
 int range fa0/13-21, g0/2
 shutdown
+
+
+
+lo checaaaas no funcaaaa aaaaaaaaah
+	4.1 PROTECCIÓN DHCP
+ip dhcp snooping
+ip dhcp snooping vlan 20
+ip arp inspection vlan 20
+ip arp inspection validate src-mac dst-mac ip
+int range g0/1-2, fa0/22-24
+ip dhcp snooping trust
+ip arp inspection trust

@@ -1,3 +1,5 @@
+1. DIRECCIONAMIENTO
+
 R-Piso*****************************
 int se0/1/0
 ip add 172.16.1.53 255.255.255.252
@@ -35,40 +37,109 @@ no shut
 
 Multi-depa************************
 int g0/1
+no switchport
 ip add 172.16.1.42 255.255.255.252
 no shut
 
 int g0/2
+no switchport
 ip add 172.16.1.46 255.255.255.252
 no shut
 
 int fa0/1
+no switchport PENDIENTE CHECALO XD
 ip add
+no shut
+
+int fa0/2
+no switchport
+ip add 172.16.1.49 255.255.255.252
 no shut
 
 int fa0/22
-ip add
+no switchport 
+ip add 172.16.1.34 255.255.255.248
 no shut
 
-R-ISP
+R-ISP***********************************
 int g0/0/0
-ip add
-no shut
-
-int g0/2/0
-ip add
+ip add 172.16.1.33 255.255.255.248
 no shut
 
 int g0/0/1
 ip add 128.128.128.1 255.255.255.0
 no shut
 
-ISP ROUTER
+ISP ROUTER******************************
 int g0/0/1
 ip add 128.128.128.2 255.255.255.0
+no shut
 
 int g0/0/0
-ip add 128.128.128.254 255.255.255.0
+no ip add 128.128.129.254 255.255.255.0
 no shut
 
 configruas el server jj
+
+
+
+OSPF****************************************
+ÁREA 1 = PISO
+ID PROCESO = 1
+
+R-Piso--------------------------
+router ospf 1
+net 172.16.0.0 0.0.0.63 area 1
+net 172.16.1.80 0.0.0.15 area 1
+net 172.16.1.52 0.0.0.3 area 0
+net 172.16.1.56 0.0.0.3 area 0
+passive-interface g0/0/0
+
+CORE----------------------------
+área 0
+router ospf 1
+net 172.16.1.52 0.0.0.3 area 0
+net 172.16.1.60 0.0.0.3 area 0
+net 172.16.1.40 0.0.0.3 area 0
+router-id 1.1.1.1
+
+CORE-REPUESTO--------------------
+area 0
+router ospf 1
+net 172.16.1.56 0.0.0.3 area 0
+net 172.16.1.60 0.0.0.3 area 0
+net 172.16.1.44 0.0.0.3 area 0
+router-id 2.2.2.2
+
+Multi-depa---------------------
+router ospf 1
+net 172.16.1.40 0.0.0.3 area 0
+net 172.16.1.44 0.0.0.3 area 0
+net 172.16.1.48 0.0.0.3 area 2
+net 172.16.0.192 0.0.0.15 area 2
+net 172.16.0.208 0.0.0.15 area 2
+net 172.16.0.224 0.0.0.15 area 2
+net 172.16.0.240 0.0.0.15 area 2
+net 172.16.0.128 0.0.0.31 area 2
+net 172.16.0.160 0.0.0.31 area 2
+net 172.16.1.0 0.0.0.15 area 2
+net 172.16.1.16 0.0.0.15 area 2
+net 172.16.1.32 0.0.0.7 area 2
+net 172.16.1.64 0.0.0.15 area 2
+
+esto no sé jaja
+passive interface fa0/23
+passive interface fa0/24
+passive interface fa0/20
+passive interface fa0/21
+passive interface fa0/18
+passive interface fa0/19
+
+R-ISP
+router ospf 1
+net 172.16.1.32 0.0.0.7 area 2
+
+
+este no
+net 128.128.128.0 0.0.0.255 area 3
+

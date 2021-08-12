@@ -1,0 +1,123 @@
+<<<<<<< HEAD
+** <- Tema
+-- <- Subtema
+°° <- Dispositivo
+
+ 1.CONFIGURACIÓN BÁSICA (al final pq que hueva poner contraseñas jaja)
+	1.1. Nombre de dispositivos----------------
+SW-1°°
+hostname SW-1
+
+SW-2°°
+hostname SW-2
+
+SW-3°°
+hostname D-Piso
+
+SW-4°°
+hostname SW-4
+
+SW-5°°
+hostname SW-5
+
+SW-6°°
+hostname SW-6
+
+SW-7°°
+hostname SW-7
+
+D-Depa°°
+hostname D-Depa
+CORE°°
+hostname CORE
+
+CORE-REPUESTO°°
+hostname CORE-R
+
+R-PISO
+hostname R-PISO
+
+Multi-depa
+hostname MULTI-DEPA
+
+R-INALÁMBRICO
+hostname R-INALAMBRICO
+
+R-ISP
+hostname R-ISP
+
+	1.2. Definir la cantidad mínima de caracteres en las contraseñas (router)----
+security password min-length 8
+
+	1.3. Constraseñas-----------------
+- EXEC Privilegiado (sin encriptar y encriptada por defecto)
+enable password kemet1
+enable secret kemet2
+
+- Línea de consola
+line con 0
+password cisc1234
+login
+end
+
+- Líneas de terminal virtual (Telnet)-----------------------
+line vty 0 4
+password kemetelnet
+login
+end
+
+	1.4. Encriptar contraseñas------------------
+service password-encryption
+
+	1.5. Desactivar la búsqueda de DNS-------------------
+no ip domain-lookup
+
+	1.6. Establecer tiempo de inactividad de sesiones de consola y telnet---------
+line console 0
+exec-timeout 5 0
+exit 
+line vty 0 4
+exec-timeout 5 0
+
+	1.7. Sincronizar la línea de comandos con los mensajes no solicitados del router o switch
+line console 0
+logging synchronous
+
+	1.8. Mensaje inicio de sesión
+banner motd Buenos días alegría"
+
+	1.9. Activar usuarios y contraseñas para el inicio de sesión------------
+Usuario Andrea 
+username ajcharles password charles1
+
+HABILITAR
+line console 0
+login local
+exit
+line vty 0 15
+login local
+
+Usuario Uriegas
+username Uriegas password uriegod
+HABILITAR
+line console 0
+login local
+exit
+line vty 0 15
+login local
+
+Usuario Arturo
+username Arturo password arthur
+HABILITAR
+line console 0
+login local
+exit
+line vty 0 15
+login local
+
+	1.10. Configurar la fecha y hora en dispositivos de interconexión--------
+clock set 19:16:00 13 Ago 2021
+
+clock timezone AR -3
+clock summer-time AR recurring
+	

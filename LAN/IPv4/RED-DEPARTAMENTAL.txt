@@ -41,18 +41,21 @@ int range fa0/1-4
 switch mode access
 switchport access vlan 2
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 ---Parte de depa.ti---
 int range fa0/5-9
 switch mode access
 switchport access vlan 4
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 ---Parte de depa.re---
 int range fa0/10-12
 switch mode access
 switchport access vlan 6
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 SW-5°°°°°°
 ---Parte de RH---
@@ -60,30 +63,35 @@ int range fa0/1-7
 switch mode access
 switchport access vlan 8
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 ---Parte de entrenamiento---
 int range fa0/8-10
 switch mode access
 switchport access vlan 10
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 ---Parte de Sala curso---
 int range fa0/11-12
 switch mode access
 switchport access vlan 12
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 SW-6°°°°°°
 int range fa0/1-10
 switch mode access
 switchport access vlan 14
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 SW-7°°°°
 int range fa0/1-10
 switch mode access
 switchport access vlan 16
 spanning-tree portfast
+spanning-tree bpduguard enable
 
 	3. Enlaces troncales--------------------
 
