@@ -1,0 +1,4 @@
+Activar ipv6
+
+ipv6 unicast-routing
+y ya lo demás es como ipv4 vea
