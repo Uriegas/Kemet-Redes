@@ -1,0 +1,54 @@
+CON IPv6
+1. Se añadió un servidor TFTP
+2. Actualizamos el SOS de cada switch
+copy tftp flash
+ip remota 172.16.0.212
+c2960-lanbasek9-mz.150-2.SE4.bin
+
+3.Indicar al switch con que sistema ingresar
+boot system flash:c2960-lanbasek9-mz.150-2.SE4.bin
+wr
+reload
+
+4. Activar IPv6
+enable
+config t
+sdm prefer dual-ipv4-and-ipv6 default
+wr
+reload
+
+RED PISO
+
+1.VLANs*****************
+Implementada ya
+
+	1.1. DAR DE ALTA A LAS VLANs
+Implementada ya
+
+	1.2 ENLACES TRONCALES.
+Implementada ya
+
+	1.3. DIRECCIONAMIENTO
+SW-1
+ipv6 unicast-routing
+int vlan 120
+ipv6 address 2001:DB8:85A3:AADB::2/64
+
+SW-2
+ipv6 unicast-routing
+int vlan 120
+ipv6 address 2001:DB8:85A3:AADB::3/64
+
+SW-3
+ipv6 unicast-routing
+int vlan 120
+ipv6 address 2001:DB8:85A3:AADB::2/64
+
+
+	1.4. HABILITAR EL ENRUTAMIENTO ENTRE VLANs (ROUTER-ON-A-STICK)
+
+int g0/0/0.20
+ipv6 address 2001:DB8:85A3:AAAA::1/64
+
+int g0/0/0.120
+ipv6 address 2001:DB8:85A3:AADB::1/64
