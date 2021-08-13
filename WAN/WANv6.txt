@@ -1,0 +1,55 @@
+CON IPV6
+
+me basaré de este para lo de la WAN xd
+R1 --------------------------------
+
+ipv6 unicast-routing
+ipv6 route ::/0 lo 1
+
+ipv6 router ospf 100
+router-id 1.1.1.1
+passive-interface lo0
+default-information originate
+
+int g0/0/0
+ipv6 ospf 100 area 0
+
+int g0/0/1
+ipv6 ospf 100 area 0
+
+int lo0
+ipv6 ospf 100 area 0
+ 
+
+R2*********************************
+ipv6 unicast-routing
+
+ipv6 router ospf 100
+router-id 2.2.2.2
+passive-interface lo0
+
+int g0/0/0
+ipv6 ospf 100 area 0
+
+int g0/0/1
+ipv6 ospf 100 area 0
+
+int lo0
+ipv6 ospf 100 area 0
+
+
+R3********************************
+ipv6 unicast-routing
+
+ipv6 router ospf 100
+router-id 3.3.3.3
+passive-interface lo0
+
+int g0/0/0
+ipv6 ospf 100 area 0
+
+int g0/0/1
+ipv6 ospf 100 area 0
+
+int lo0
+ipv6 ospf 100 area 0
