@@ -50,10 +50,6 @@ no switchport
 ip add 172.16.1.46 255.255.255.252
 no shut
 
-int fa0/1
-no switchport PENDIENTE CHECALO XD
-ip add
-no shut
 
 int fa0/2
 no switchport
@@ -102,6 +98,7 @@ net 172.16.1.0 0.0.0.15 area 2
 net 172.16.1.16 0.0.0.15 area 2
 net 172.16.1.48 0.0.0.3 area 2
 net 172.16.1.64 0.0.0.15 area 2
+net 172.16.0.64 0.0.0.63 area 2
 
 
 CORE----------------------------

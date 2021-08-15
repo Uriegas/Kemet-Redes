@@ -25,6 +25,9 @@ name CALIDAD
 vlan 16
 name INGENIERÍA
 
+vlan 18
+name COMEDOR
+
 vlan 110
 name ADMINISTRATIVA_DEPARTAMENTAL
 
@@ -200,6 +203,7 @@ ip add 172.16.1.68 255.255.255.240
 no shut
 ip default 172.16.1.78
 
+
 	2.5. HABILITAR EL ENRUTAMIENTO ENTRE VLANs USANDO MULTICAPA
 ip routing
 int vlan 2
@@ -237,6 +241,10 @@ no shut
 int vlan 110
 ip add 172.16.1.78 255.255.255.240
 no shut
+
+
+int vlan 18
+ip add 172.16.0.126 255.255.255.192
 
 	2.5. CONFIGURAMOS PRIORIDADES SPA
 multi-depa

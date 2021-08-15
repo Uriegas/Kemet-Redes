@@ -1,55 +1,103 @@
 CON IPV6
 
-me basaré de este para lo de la WAN xd
-R1 --------------------------------
+1. DIRECCIONAMIENTO
+R-Piso**********
+int se0/1/0
+ipv6 add 2001:DB8:85A3:AACD::1/64
 
+int se0/1/1
+ipv6 add 2001:DB8:85A3:AACE::1/64
+
+CORE************
+int se0/1/1
+ipv6 add 2001:DB8:85A3:AACD::2/64
+
+int se0/1/0
+ipv6 add 2001:DB8:85A3:AACF::1/64
+
+int g0/0/1
+ipv6 add 2001:DB8:85A3:AACA::1/64
+
+int g0/0/0
+ipv6 add 2001:DB8:85A3/48
+
+CORE-Repuesto****
+int se0/1/1
+ipv6 add 2001:DB8:85A3:AACE::2/64
+
+int se0/1/0
+ipv6 add 2001:DB8:85A3:AACF::2/64
+
+int g0/0/1
+ipv6 add 2001:DB8:85A3:AACB::1/64
+
+Multi-depa
+int g0/1
+ipv6 add 2001:DB8:85A3:AACA::2/64
+
+int g0/2
+ipv6 add 2001:DB8:85A3:AACB::2/64
+
+int fa0/2
+ipv6 add pendientisimo xd
+
+
+R-Piso
 ipv6 unicast-routing
-ipv6 route ::/0 lo 1
+ipv6 router ospf 10
 
-ipv6 router ospf 100
+int se0/1/0
+ipv6 ospf 10 area 0
+
+int se0/1/1
+ipv6 ospf 10 area 0
+
+
+CORE *************************
+ipv6 unicast-routing
+ipv6 route ::/0 g0/0/0
+ipv6 router ospf 10
 router-id 1.1.1.1
-passive-interface lo0
 default-information originate
 
-int g0/0/0
-ipv6 ospf 100 area 0
+int se0/1/1
+ipv6 ospf 10 area 0
+
+int se0/1/0
+ipv6 ospf 10 area 0
 
 int g0/0/1
-ipv6 ospf 100 area 0
+ipv6 ospf 10 area 0
 
-int lo0
-ipv6 ospf 100 area 0
- 
-
-R2*********************************
+CORE-Repuesto*************
 ipv6 unicast-routing
-
-ipv6 router ospf 100
+ipv6 router ospf 10
 router-id 2.2.2.2
-passive-interface lo0
 
-int g0/0/0
-ipv6 ospf 100 area 0
+int se0/1/1
+ipv6 ospf 10 area 0
+
+int se0/1/0
+ipv6 ospf 10 area 0
 
 int g0/0/1
-ipv6 ospf 100 area 0
+ipv6 ospf 10 area 0
 
-int lo0
-ipv6 ospf 100 area 0
-
-
-R3********************************
+Multi-depa
 ipv6 unicast-routing
+ipv6 router ospf 10
 
-ipv6 router ospf 100
-router-id 3.3.3.3
-passive-interface lo0
+int g0/1
+ipv6 ospf 10 area 0
 
-int g0/0/0
-ipv6 ospf 100 area 0
+int g0/2
+ipv6 ospf 10 area 0
 
-int g0/0/1
-ipv6 ospf 100 area 0
 
-int lo0
-ipv6 ospf 100 area 0
+R-Piso
+int se0/1/0
+ipv6 ospf cost 50
+
+Multi-depa
+int g0/2
+ipv6 ospf cost 2

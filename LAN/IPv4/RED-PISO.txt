@@ -93,7 +93,7 @@ encapsulation dot1q 120
 ip address 172.16.1.94 255.255.255.240
 
 
-	2.5. CONFIGURAMOS PRIORIDADES SPANING TREE
+	2.5. CONFIGURAMOS PRIORIDADES SPA
 
 SW-3
 spanning-tree vlan 20,120,140 priority 4096
@@ -146,34 +146,8 @@ shutdown
 
 
 
-4.1 PROTECCIÓN DHCP
-********SW-3 is ip helper********
-int g0/0/0
-ip helper-address 172.16.0.62
-
-
----Enable DHCP in all vlans (Trust none vlan)
---SW-1, SW-2 SW-3
-ip dhcp snooping
-ip dhcp snooping vlan 1,20,120,140
-
----Trust ports that go the the DHCP server(R-Piso)
---SW-1
-int range fa0/24, g0/1, g0/2
-ip dhcp snooping trust
-
---SW-2
-int range fa0/22-23, g0/1
-ip dhcp snooping trust
-
---SW-3
-int range fa0/22-24, g0/1-2
-ip dhcp snooping trust
-
-VERIFICATION: show ip dhcp snooping (See which ports are trusted and which not)
-
-
-/*
+lo checaaaas no funcaaaa aaaaaaaaah
+	4.1 PROTECCIÓN DHCP
 ip dhcp snooping
 ip dhcp snooping vlan 20
 ip arp inspection vlan 20
@@ -181,5 +155,3 @@ ip arp inspection validate src-mac dst-mac ip
 int range g0/1-2, fa0/22-24
 ip dhcp snooping trust
 ip arp inspection trust
-*/
-
