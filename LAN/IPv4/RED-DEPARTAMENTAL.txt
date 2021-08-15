@@ -328,3 +328,5 @@ switchport port-security violation shutdown
 
 int range fa0/11-19, fa0/22-24, g0/2
 shutdown
+
+

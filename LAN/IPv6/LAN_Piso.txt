@@ -59,6 +59,6 @@ ipv6 unicast-routing
 ipv6 dhcp POOL VLAN20
 address prefix 2001:DB8:85A3:AAAA::/64
 int g0/0/0.20
-ipv6 address FE80::2 link-local
+ipv6 address FE80::2
 ipv6 dhcp server VLAN20
 ipv6 nd managed-config-flag

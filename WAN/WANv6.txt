@@ -19,7 +19,7 @@ int g0/0/1
 ipv6 add 2001:DB8:85A3:AACA::1/64
 
 int g0/0/0
-ipv6 add 2001:DB8:85A3/48
+ipv6 add 2001:DB8:85A3::1/48
 
 CORE-Repuesto****
 int se0/1/1
@@ -40,6 +40,39 @@ ipv6 add 2001:DB8:85A3:AACB::2/64
 
 int fa0/2
 ipv6 add pendientisimo xd
+
+
+CORE
+ipv6 route 2001:DB8:85A3:AAAA::0/64 s0/1/1
+ipv6 route 2001:DB8:85A3:AADB::0/64 s0/1/1
+ipv6 route 2001:DB8:85A3:AAAE::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AAAF::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AABA::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AABB::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AAAC::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AAAD::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AABC::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AABD::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AADB::0/64 g0/0/1
+ipv6 route 2001:DB8:85A3:AACE::0/64 s0/1/0
+ipv6 route 2001:DB8:85A3:AACB::0/64 g0/0/1
+R-Piso
+
+ipv6 route ::/0 2001:DB8:85A3:AACD::2
+
+CORE-Repuesto
+ipv6 route ::/0 2001:DB8:85A3:AACF::1
+
+multi-depa
+ipv6 route ::/0 2001:DB8:85A3:AACA::1
+
+
+
+
+
+
+
+
 
 
 R-Piso
