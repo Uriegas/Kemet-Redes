@@ -239,11 +239,13 @@ backup_running_SW7
 
 
 
-
+*c cancela*
 NAT (me falta ver xd)
-access-list 1 permit 128.128.127.0 0.0.0.255
-int g0/2/2
-ip access-group 1 in
+ACL
+access-list 1 permit 128.128.128.0 0.0.0.255
+
+int g0/0/0
+ip access-group 1 out
 
 estática
 
