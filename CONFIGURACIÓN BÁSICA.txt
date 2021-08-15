@@ -58,13 +58,13 @@ enable secret kemet2
 line con 0
 password cisc1234
 login
-end
+
 
 - Líneas de terminal virtual (Telnet)-----------------------
 line vty 0 4
 password kemetelnet
 login
-end
+
 
 	1.4. Encriptar contraseñas------------------
 service password-encryption
@@ -84,10 +84,9 @@ line console 0
 logging synchronous
 
 	1.8. Mensaje inicio de sesión
-banner motd Buenos días alegría"
+banner motd "Buenos días alegría"
 
 	1.9. Activar usuarios y contraseñas para el inicio de sesión------------
-Usuario Andrea 
 username ajcharles password charles1
 
 HABILITAR
