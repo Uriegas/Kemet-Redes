@@ -149,6 +149,8 @@ ip ospf cost 2
 RESPALDOS***********************
 
 Este es el usuario para poder hacer uso de los respaldos
+enable
+config t
 ip ftp username AJCharles
 ip ftp password 4ndr3a
 
@@ -162,9 +164,9 @@ backup_running_R_Piso
 
 sh ver
 copy tftp flash
-el nombre del sistema op
+isr4300-universalk9.03.16.05.S.155-3.S5-ext.SPA.bin
 La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
+nombre del archivo: BackupPiso_isr4300-universalk9.03.16.05.S.155-3.S5-ext.SPA.bin
 
 
 CORE°°°°°°°°
@@ -172,90 +174,52 @@ copy running-config tftp
 Te pedirá la ip 172.16.0.212
 backup_running_R_Piso
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
-
 CORE-REPUESTO°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
-backup_running_R_Piso
+backup_running_C-Repuesto
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
 
 MULTI-DEPA°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
-backup_running_R_Piso
+backup_running_multi_depa
 
 sh ver
 copy tftp flash
 el nombre del sistema op
 La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
+nombre del archivo: BackupPiso_c2960-lanbasek9-mz.150-2.SE4.bin
 
 SWITCHES:
 
 SW-1°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
-backup_running_R_Piso
+backup_running_SW1
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
 
 SW-2°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
-backup_running_R_Piso
+backup_running_SW2
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
 
 SW-3°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
-backup_running_R_Piso
-
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupPiso_NombreDelSO
+backup_running_SW3
 
 SW-4°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
 backup_running_SW4
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupSW4_c2960-lanbasek9-mz.150-2.SE4.bin
-
 SW-5°°°°°°°°
 copy running-config tftp
 Te pedirá la ip 172.16.0.212
 backup_running_SW5
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupSW5_c2960-lanbasek9-mz.150-2.SE4.bin
 
 SW-6°°°°°°°°
 copy running-config tftp
@@ -273,8 +237,23 @@ copy running-config tftp
 Te pedirá la ip 172.16.0.212
 backup_running_SW7
 
-sh ver
-copy tftp flash
-el nombre del sistema op
-La ip 172.16.0.212
-nombre del archivo: BackupSW7_c2960-lanbasek9-mz.150-2.SE4.bin
+
+
+
+NAT (me falta ver xd)
+access-list 1 permit 128.128.127.0 0.0.0.255
+int g0/2/2
+ip access-group 1 in
+
+estática
+
+ip nat inside source statick 172.16.0.213 128.128.127.2
+
+int g0/2/2
+ip add 172.16.0.213 255.255.255.240
+ip nat inside
+exit
+
+int g0/0/0
+ip address 128.128.127.2 255.255.255.0
+ip nat outside
